@@ -1,106 +1,261 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= product.name %> | Maayon Fashion</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css">
-</head>
-<body>
-    <%- include('partials/navbar') %>
-    
-    <div class="container product-detail-section">
-        <div class="row">
-            <!-- Product Images -->
-            <div class="col-md-6">
-                <div class="main-image mb-3">
-                    <img src="<%= images[0]?.image_url || product.image_url %>" class="img-fluid rounded" alt="<%= product.name %>" style="width: 100%;">
+<%- include('partials/header') %>
+<%- include('partials/navbar') %>
+
+<%
+const phone = '94765539425';
+const engMsg =
+    `👋 Hello *MAAYON FASHION!*\n\n` +
+    `I would like to place an order:\n\n` +
+    `--------------------------------\n` +
+    `*Product :* ${product.name}\n` +
+    `*Price   :* LKR ${product.price}\n` +
+    `--------------------------------\n\n` +
+    `Please confirm availability and share payment details.\n` +
+    `Thank you! 🙏`;
+const sinMsg =
+    `👋 හෙලෝ *MAAYON FASHION!*\n\n` +
+    `මට පහත නිෂ්පාදිතය ඇණවුම් කිරීමට අවශ්‍යයි:\n\n` +
+    `--------------------------------\n` +
+    `*නිෂ්පාදිතය :* ${product.name}\n` +
+    `*මිල       :* LKR ${product.price}\n` +
+    `--------------------------------\n\n` +
+    `ලබා ගත හැකිද යන්න දන්වා ගෙවීම් විස්තර යවන්න.\n` +
+    `ස්තූතියි! 🙏`;
+const tamMsg =
+    `👋 வணக்கம் *MAAYON FASHION!*\n\n` +
+    `நான் கீழே உள்ள பொருளை ஆர்டர் செய்ய விரும்புகிறேன்:\n\n` +
+    `--------------------------------\n` +
+    `*பொருள் :* ${product.name}\n` +
+    `*விலை   :* LKR ${product.price}\n` +
+    `--------------------------------\n\n` +
+    `கிடைக்குமா என்று உறுதிப்படுத்தி கட்டண விவரங்கள் அனுப்பவும்.\n` +
+    `நன்றி! 🙏`;
+
+// Average rating
+const avgRating = reviews.length
+    ? (reviews.reduce((s, r) => s + r.rating, 0) / reviews.length).toFixed(1)
+    : null;
+%>
+
+<div class="container product-detail-section">
+
+    <!-- TOP: Image + Info -->
+    <div class="row g-5">
+
+        <!-- LEFT: Image -->
+        <div class="col-md-6">
+            <% if (images.length === 1) { %>
+                <img src="<%= images[0].image_url %>" class="img-fluid rounded-3 w-100"
+                     style="max-height:520px;object-fit:cover;" alt="<%= product.name %>">
+            <% } else { %>
+                <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        <% images.forEach((img, idx) => { %>
+                            <button type="button" data-bs-target="#productCarousel"
+                                    data-bs-slide-to="<%= idx %>"
+                                    class="<%= idx === 0 ? 'active' : '' %>"
+                                    style="background:var(--gold);width:8px;height:8px;border-radius:50%;"></button>
+                        <% }) %>
+                    </div>
+                    <div class="carousel-inner rounded-3">
+                        <% images.forEach((img, idx) => { %>
+                            <div class="carousel-item <%= idx === 0 ? 'active' : '' %>">
+                                <img src="<%= img.image_url %>" class="d-block w-100"
+                                     style="height:480px;object-fit:cover;" alt="<%= product.name %>">
+                            </div>
+                        <% }) %>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                    </button>
                 </div>
-                <% if (images && images.length > 1) { %>
-                <div class="row g-2 mt-2">
-                    <% images.forEach(img => { %>
-                        <div class="col-3">
-                            <img src="<%= img.image_url %>" class="img-fluid rounded" alt="Thumbnail" style="cursor: pointer; height: 80px; object-fit: cover;">
-                        </div>
+                <!-- Thumbnail strip -->
+                <div class="d-flex gap-2 mt-3 flex-wrap">
+                    <% images.forEach((img, idx) => { %>
+                        <img src="<%= img.image_url %>" onclick="goToSlide(<%= idx %>)"
+                             class="thumb-img"
+                             style="width:64px;height:64px;object-fit:cover;border-radius:8px;cursor:pointer;
+                                    border:2px solid <%= idx === 0 ? 'var(--gold)' : 'var(--border)' %>;"
+                             alt="Thumbnail <%= idx+1 %>">
                     <% }) %>
+                </div>
+                <script>
+                const carousel = document.getElementById('productCarousel');
+                const thumbs = document.querySelectorAll('.thumb-img');
+                function goToSlide(idx) { bootstrap.Carousel.getInstance(carousel).to(idx); }
+                carousel.addEventListener('slid.bs.carousel', e => {
+                    thumbs.forEach((t, i) => t.style.border = i === e.to ? '2px solid var(--gold)' : '2px solid var(--border)');
+                });
+                </script>
+            <% } %>
+        </div>
+
+        <!-- RIGHT: Product Info -->
+        <div class="col-md-6">
+            <p style="font-size:0.72rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">
+                New Collection
+            </p>
+            <h1 style="font-size:clamp(1.6rem,3vw,2.4rem);line-height:1.25;margin-bottom:12px;">
+                <%= product.name %>
+            </h1>
+
+            <!-- Tags from category -->
+            <span class="product-tag"><%= product.category %></span>
+
+            <!-- Price -->
+            <p class="price-large mt-3 mb-1">LKR <%= product.price %></p>
+
+            <% if (avgRating) { %>
+            <div class="d-flex align-items-center gap-2 mb-3">
+                <div class="patron-stars">
+                    <% for(let i=1;i<=5;i++) { %>
+                        <i class="fas fa-star <%= i <= Math.round(avgRating) ? '' : 'text-muted' %>"></i>
+                    <% } %>
+                </div>
+                <small class="text-muted">(<%= reviews.length %> review<%= reviews.length !== 1 ? 's' : '' %>)</small>
+            </div>
+            <% } %>
+
+            <p style="color:var(--mid);font-size:0.95rem;line-height:1.8;margin-bottom:24px;">
+                <%= product.description %>
+            </p>
+
+            <hr style="border-color:var(--border);margin:20px 0;">
+
+            <!-- WhatsApp Order -->
+            <p style="font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;color:var(--mid);margin-bottom:12px;">
+                <i class="fab fa-whatsapp text-success me-1"></i> Order via WhatsApp
+            </p>
+            <div class="d-flex flex-wrap gap-2">
+                <a href="https://wa.me/<%= phone %>?text=<%= encodeURIComponent(engMsg) %>"
+                   class="btn whatsapp-lang-btn" target="_blank">
+                    <i class="fab fa-whatsapp me-1"></i> English
+                </a>
+                <a href="https://wa.me/<%= phone %>?text=<%= encodeURIComponent(sinMsg) %>"
+                   class="btn whatsapp-lang-btn" target="_blank">
+                    <i class="fab fa-whatsapp me-1"></i> සිංහල
+                </a>
+                <a href="https://wa.me/<%= phone %>?text=<%= encodeURIComponent(tamMsg) %>"
+                   class="btn whatsapp-lang-btn" target="_blank">
+                    <i class="fab fa-whatsapp me-1"></i> தமிழ்
+                </a>
+            </div>
+
+            <p style="font-size:0.78rem;color:var(--mid);margin-top:12px;">
+                <i class="fas fa-check-circle text-success me-1"></i>
+                Connect with our team for size, quantity, and custom orders.
+            </p>
+        </div>
+    </div>
+
+    <!-- COMPOSITION & CARE -->
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <h4 class="detail-section-title">Composition & Care</h4>
+            <table class="comp-table">
+                <tr><td>Category</td><td><%= product.category %></td></tr>
+                <tr><td>Origin</td><td>Maayon Atelier</td></tr>
+                <tr><td>Care</td><td>Handle with care</td></tr>
+                <tr><td>Availability</td><td>Contact via WhatsApp</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- REVIEWS -->
+    <div class="row mt-5">
+        <div class="col-lg-8">
+
+            <!-- Heading + score -->
+            <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-3">
+                <div>
+                    <h3 class="reviews-heading mb-0">Patron Chronicles</h3>
+                    <p style="color:var(--mid);font-size:0.85rem;margin-top:4px;">
+                        Words from our cherished community who carry the Maayon legacy in every fold.
+                    </p>
+                </div>
+                <% if (avgRating) { %>
+                <div class="text-center">
+                    <div class="patron-score"><%= avgRating %></div>
+                    <div class="patron-stars mt-1">
+                        <% for(let i=1;i<=5;i++) { %>
+                            <i class="fas fa-star <%= i <= Math.round(avgRating) ? '' : 'fa-regular' %>"></i>
+                        <% } %>
+                    </div>
                 </div>
                 <% } %>
             </div>
-            
-            <!-- Product Info -->
-            <div class="col-md-6">
-                <div class="product-tag"><%= product.category || 'Fashion' %></div>
-                <h1 class="mb-3"><%= product.name %></h1>
-                <div class="price-large mb-3">LKR <%= product.price %></div>
-                <p class="text-muted mb-4"><%= product.description || 'No description available.' %></p>
-                
-                <a href="https://wa.me/94771234567?text=I'm%20interested%20in%20<%= encodeURIComponent(product.name) %>%20for%20LKR%20<%= product.price %>" 
-                   class="whatsapp-order-btn" target="_blank">
-                    📱 Order via WhatsApp
-                </a>
-                
-                <hr class="my-4">
-                
-                <!-- Reviews Section -->
-                <h3 class="detail-section-title">Customer Reviews</h3>
-                <% if (reviews && reviews.length > 0) { %>
-                    <% reviews.forEach(review => { %>
-                        <div class="review-card">
-                            <div class="d-flex align-items-center mb-2">
-                                <div class="reviewer-avatar me-2">
-                                    <%= review.customer_name ? review.customer_name.charAt(0).toUpperCase() : 'U' %>
+
+            <!-- Reviews list -->
+            <% if (reviews.length > 0) { %>
+                <% reviews.forEach(review => { %>
+                    <div class="review-card">
+                        <div class="d-flex align-items-center gap-3 mb-2">
+                            <div class="reviewer-avatar">
+                                <%= review.customer_name.charAt(0).toUpperCase() %>
+                            </div>
+                            <div>
+                                <strong style="font-size:0.95rem;"><%= review.customer_name %></strong>
+                                <div class="review-stars">
+                                    <% for(let i=1;i<=5;i++) { %>
+                                        <i class="fas fa-star <%= i <= review.rating ? '' : 'text-muted' %>"></i>
+                                    <% } %>
                                 </div>
-                                <strong><%= review.customer_name || 'Anonymous' %></strong>
                             </div>
-                            <div class="review-stars mb-2">
-                                <%= '★'.repeat(review.rating) %><%= '☆'.repeat(5-review.rating) %>
-                            </div>
-                            <p class="review-text"><%= review.comment %></p>
-                            <small class="text-muted"><%= new Date(review.created_at).toLocaleDateString() %></small>
+                            <small class="text-muted ms-auto" style="font-size:0.78rem;">
+                                <%= new Date(review.created_at).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}) %>
+                            </small>
                         </div>
-                    <% }) %>
-                <% } else { %>
-                    <p>No reviews yet. Be the first to review this product!</p>
-                <% } %>
-                
-                <!-- Add Review Form -->
-                <div class="add-review mt-4">
-                    <h4>Write a Review</h4>
-                    <form action="/reviews/add" method="POST">
-                        <input type="hidden" name="product_id" value="<%= product.id %>">
-                        <div class="mb-3">
-                            <label class="form-label">Your Name</label>
-                            <input type="text" name="customer_name" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Rating</label>
-                            <select name="rating" class="form-control" required>
-                                <option value="5">5 Stars - Excellent</option>
-                                <option value="4">4 Stars - Very Good</option>
-                                <option value="3">3 Stars - Good</option>
-                                <option value="2">2 Stars - Fair</option>
-                                <option value="1">1 Star - Poor</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Your Review</label>
-                            <textarea name="comment" class="form-control" rows="3" required></textarea>
-                        </div>
-                        <button type="submit" class="btn-gold">Submit Review</button>
-                    </form>
-                </div>
+                        <p class="review-text mb-0">"<%= review.comment %>"</p>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <p style="color:var(--mid);font-style:italic;">Be the first to share your experience!</p>
+            <% } %>
+
+            <!-- Add Review -->
+            <div class="add-review mt-4">
+                <h4>Share Your Experience</h4>
+                <form action="/reviews/add" method="POST">
+                    <input type="hidden" name="product_id" value="<%= product.id %>">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="customer_name" placeholder="Your Name" required>
+                    </div>
+                    <div class="mb-3">
+                        <select class="form-control" name="rating" required>
+                            <option value="">Select Rating</option>
+                            <option value="5">5 ★★★★★ — Excellent</option>
+                            <option value="4">4 ★★★★☆ — Very Good</option>
+                            <option value="3">3 ★★★☆☆ — Good</option>
+                            <option value="2">2 ★★☆☆☆ — Fair</option>
+                            <option value="1">1 ★☆☆☆☆ — Poor</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <textarea class="form-control" name="comment" rows="3" placeholder="Tell us about your experience..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-gold">Submit Review</button>
+                </form>
             </div>
         </div>
     </div>
-    
-    <%- include('partials/footer') %>
-    
-    <a href="/auth/login" class="admin-fab">
-        <span class="lock-icon">🔒</span>
-        <span>Admin</span>
-    </a>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+<!-- JOIN MAAYON CIRCLE -->
+<section class="newsletter-section mt-5">
+    <div class="container">
+        <p style="font-size:0.72rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">Exclusive Updates</p>
+        <h3>Join the Maayon Circle</h3>
+        <p>Be the first to see our monthly drops and artisanal stories.</p>
+        <div class="newsletter-input-group">
+            <div class="input-group">
+                <input type="email" class="form-control" placeholder="Email Address">
+                <button class="btn btn-gold">Subscribe</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include('partials/footer') %>
