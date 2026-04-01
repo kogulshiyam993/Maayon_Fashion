@@ -18,7 +18,7 @@ const supabase = createClient(
 // Supabase Admin client (for server-side operations with full access)
 const supabaseAdmin = createClient(
     process.env.SUPABASE_URL,
-    process.env.SUPABASE_SERVICE_ROLE_KEY, // You'll need to add this to .env
+    process.env.SUPABASE_SERVICE_ROLE_KEY,
     {
         auth: {
             autoRefreshToken: false,
@@ -34,7 +34,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Session configuration
 app.use(session({
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET || 'your-secret-key-change-this',
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -82,6 +82,12 @@ app.use('/admin', adminRoutes);
 app.use('/reviews', reviewRoutes);
 app.use('/auth', authRoutes);
 
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-});
+// For Vercel serverless deployment
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`Server running on http://localhost:${PORT}`);
+    });
+}
+
+// Export for Vercel (CRITICAL for deployment)
+module.exports = app;
