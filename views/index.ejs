@@ -1,63 +1,92 @@
- <%- include('partials/header') %>
+<%- include('partials/header') %>
 <%- include('partials/navbar') %>
 
-<!-- Hero Section -->
+<!-- HERO -->
 <section class="hero-section">
     <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6">
-                <h1 class="display-4">Style Meets Excellence</h1>
-                <p class="lead">Discover trendy fashion and premium stationery at MAAYON FASHION</p>
-                <a href="/products/fashion" class="btn btn-gold">Shop Now</a>
-            </div>
-        </div>
+        <p style="font-size:0.75rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">New Collection</p>
+        <h1>Style Meets <span>Excellence</span></h1>
+        <p class="lead">Discover trendy fashion and premium stationery,<br>crafted for those who appreciate quality.</p>
+        <a href="/products/fashion" class="btn btn-gold">Explore Collection</a>
     </div>
 </section>
 
-<!-- Fashion Section -->
+<!-- FASHION SECTION -->
 <section class="featured-section">
     <div class="container">
+        <p style="font-size:0.72rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);text-align:center;">Curated For You</p>
         <h2 class="section-title">Trendy Girls' Fashion</h2>
+        <p class="section-subtitle">Handpicked styles for every occasion</p>
         <div class="row">
             <% fashionProducts.forEach(product => { %>
                 <div class="col-md-4 mb-4">
                     <div class="product-card">
-                        <img src="<%= product.image_url %>" class="product-img" alt="<%= product.name %>">
+                        <div class="product-img-wrap">
+                            <img src="<%= product.image_url %>" class="product-img" alt="<%= product.name %>">
+                        </div>
                         <div class="product-info">
                             <h5><%= product.name %></h5>
                             <p class="price">LKR <%= product.price %></p>
-                            <a href="/product/<%= product.id %>" class="btn btn-outline-gold">View Details</a>
+                            <a href="/product/<%= product.id %>" class="btn btn-outline-gold w-100">View Details</a>
                         </div>
                     </div>
                 </div>
             <% }) %>
         </div>
-        <div class="text-center mt-4">
+        <div class="text-center mt-2">
             <a href="/products/fashion" class="btn btn-gold">View All Fashion</a>
         </div>
     </div>
 </section>
 
-<!-- Stationery Section -->
+<!-- DIVIDER BANNER -->
+<div style="background:linear-gradient(135deg,var(--rose),#fdf0ec);padding:40px 0;text-align:center;">
+    <div class="container">
+        <p style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--dark);margin:0;font-style:italic;">
+            "From a dream to a destination — <span style="color:var(--gold);">celebrating 1 year of excellence</span>"
+        </p>
+    </div>
+</div>
+
+<!-- STATIONERY SECTION -->
 <section class="featured-section bg-light">
     <div class="container">
-        <h2 class="section-title">Premium Stationery</h2>
+        <p style="font-size:0.72rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);text-align:center;">Premium Quality</p>
+        <h2 class="section-title">Stationery Collection</h2>
+        <p class="section-subtitle">Elevate your workspace and study desk</p>
         <div class="row">
             <% stationeryProducts.forEach(product => { %>
                 <div class="col-md-4 mb-4">
                     <div class="product-card">
-                        <img src="<%= product.image_url %>" class="product-img" alt="<%= product.name %>">
+                        <div class="product-img-wrap">
+                            <img src="<%= product.image_url %>" class="product-img" alt="<%= product.name %>">
+                        </div>
                         <div class="product-info">
                             <h5><%= product.name %></h5>
                             <p class="price">LKR <%= product.price %></p>
-                            <a href="/product/<%= product.id %>" class="btn btn-outline-gold">View Details</a>
+                            <a href="/product/<%= product.id %>" class="btn btn-outline-gold w-100">View Details</a>
                         </div>
                     </div>
                 </div>
             <% }) %>
         </div>
-        <div class="text-center mt-4">
+        <div class="text-center mt-2">
             <a href="/products/stationery" class="btn btn-gold">View All Stationery</a>
+        </div>
+    </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter-section">
+    <div class="container">
+        <p style="font-size:0.72rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">Stay Connected</p>
+        <h3>Join the Maayon Circle</h3>
+        <p>Be the first to see our monthly drops and artisanal stories.</p>
+        <div class="newsletter-input-group">
+            <div class="input-group">
+                <input type="email" class="form-control" placeholder="Email Address">
+                <button class="btn btn-gold">Subscribe</button>
+            </div>
         </div>
     </div>
 </section>
