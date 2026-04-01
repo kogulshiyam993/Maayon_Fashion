@@ -21,9 +21,11 @@
             <% fashionProducts.forEach(product => { %>
                 <div class="col-md-4 mb-4">
                     <div class="product-card">
+                        <a href="/product/<%= product.id %>" class="product-img-link">
                         <div class="product-img-wrap">
                             <img src="<%= product.image_url %>" class="product-img" alt="<%= product.name %>">
                         </div>
+                        </a>
                         <div class="product-info">
                             <h5><%= product.name %></h5>
                             <p class="price">LKR <%= Number(product.price).toLocaleString('en-US') %></p>
@@ -58,9 +60,11 @@
             <% stationeryProducts.forEach(product => { %>
                 <div class="col-md-4 mb-4">
                     <div class="product-card">
+                        <a href="/product/<%= product.id %>" class="product-img-link">
                         <div class="product-img-wrap">
                             <img src="<%= product.image_url %>" class="product-img" alt="<%= product.name %>">
                         </div>
+                        </a>
                         <div class="product-info">
                             <h5><%= product.name %></h5>
                             <p class="price">LKR <%= Number(product.price).toLocaleString('en-US') %></p>

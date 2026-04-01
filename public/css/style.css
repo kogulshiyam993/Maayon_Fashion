@@ -223,6 +223,43 @@ h1, h2, h3, h4 {
 .product-card:hover .product-img { transform: scale(1.04); }
 .product-img-wrap { overflow: hidden; }
 
+/* Clickable image link */
+.product-img-link {
+    display: block;
+    text-decoration: none;
+    cursor: pointer;
+    position: relative;
+}
+.product-img-link::after {
+    content: '\f06e';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: rgba(184,149,58,0.88);
+    color: #fff;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    opacity: 0;
+    line-height: 48px;
+    text-align: center;
+}
+.product-img-link:hover::after {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+}
+.product-img-link:hover .product-img {
+    opacity: 0.88;
+}
+
 .product-info {
     padding: 18px 20px 20px;
     text-align: left;
@@ -569,12 +606,33 @@ footer p { font-size: 0.85rem; }
 }
 
 @media (max-width: 768px) {
+    /* Hero */
     .hero-section { padding: 60px 0 50px; }
     .hero-section h1 { font-size: 2rem; }
+
+    /* Product cards */
     .product-img { height: 220px; }
-    .featured-section { padding: 50px 0; }
+    .featured-section { padding: 40px 0; }
+    .product-card { margin-bottom: 16px; }
+    .product-info { padding: 14px 16px 16px; }
+
+    /* Product detail page */
+    .product-detail-section { padding: 24px 0; }
+    .product-detail-section .row { margin: 0 4px; }
+    .product-detail-section .col-md-6 { padding: 0 8px; margin-bottom: 20px; }
+
+    /* Price */
     .price-large { font-size: 1.5rem; }
-    .hero-quick-links { gap: 10px; }
-    .hero-quick-btn { padding: 12px 18px; min-width: 90px; font-size: 0.72rem; }
-    .hero-quick-btn i { font-size: 1.2rem; }
+    .price { font-size: 1rem; }
+
+    /* Container side padding on mobile */
+    .container { padding-left: 16px; padding-right: 16px; }
+
+    /* Section margins */
+    .featured-section .container { padding-top: 8px; }
+    .newsletter-section { padding: 40px 16px; }
+
+    /* Footer spacing */
+    footer .col-md-4 { margin-bottom: 24px; }
+    footer { padding: 32px 0 16px; }
 }

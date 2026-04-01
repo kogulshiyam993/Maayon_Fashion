@@ -20,9 +20,11 @@
             <% products.forEach(product => { %>
                 <div class="col-md-4 col-sm-6 mb-4">
                     <div class="product-card">
+                        <a href="/product/<%= product.id %>" class="product-img-link">
                         <div class="product-img-wrap">
                             <img src="<%= product.image_url %>" class="product-img" alt="<%= product.name %>">
                         </div>
+                        </a>
                         <div class="product-info">
                             <span class="product-tag" style="font-size:0.65rem;padding:3px 10px;"><%= product.category %></span>
                             <h5 class="mt-2"><%= product.name %></h5>
