@@ -24,6 +24,9 @@
                     <a href="https://www.instagram.com/fashionmaayon?igsh=M2x2NnVkaWkzYWk0" target="_blank" class="text-white">
                         <i class="fab fa-instagram fa-2x"></i>
                     </a>
+                    <a href="/auth/login" class="footer-admin-btn ms-3" title="Admin Login">
+                        <i class="fas fa-lock"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -36,7 +39,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- Admin Login Button (fixed bottom-right) -->
+<% if (locals.isAdmin) { %>
+<!-- Admin Login Button (fixed bottom-right) - visible to admins only -->
 <style>
   .admin-fab {
     position: fixed;
@@ -81,10 +85,11 @@
   }
 </style>
 
-<a href="/auth/login" class="admin-fab" title="Admin Login">
+<a href="/admin/dashboard" class="admin-fab" title="Admin Dashboard">
     <span class="lock-icon"><i class="fas fa-lock"></i></span>
     Admin
 </a>
+<% } %>
 
 </body>
 </html>

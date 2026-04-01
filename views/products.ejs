@@ -26,7 +26,7 @@
                         <div class="product-info">
                             <span class="product-tag" style="font-size:0.65rem;padding:3px 10px;"><%= product.category %></span>
                             <h5 class="mt-2"><%= product.name %></h5>
-                            <p class="price">LKR <%= product.price %></p>
+                            <p class="price">LKR <%= Number(product.price).toLocaleString('en-US') %></p>
                             <a href="/product/<%= product.id %>" class="btn btn-outline-gold w-100">View Details</a>
                         </div>
                     </div>

@@ -4,33 +4,42 @@
             <span class="brand-gold">MAAYON</span>
             <span class="brand-rose">FASHION</span>
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link <%= locals.currentPage === 'home' ? 'active' : '' %>" href="/">Home</a>
+                    <a class="nav-link <%= locals.currentPage === 'home' ? 'active' : '' %>" href="/">
+                        <i class="fas fa-home me-1 d-lg-none"></i>Home
+                    </a>
                 </li>
 
                 <!-- Dynamic Categories -->
                 <% (locals.categories || []).forEach(cat => { %>
                     <li class="nav-item">
                         <a class="nav-link <%= locals.currentPage === cat.slug ? 'active' : '' %>"
-                           href="/products/<%= cat.slug %>"><%= cat.name %></a>
+                           href="/products/<%= cat.slug %>">
+                            <i class="fas fa-tag me-1 d-lg-none"></i><%= cat.name %>
+                        </a>
                     </li>
                 <% }) %>
 
                 <li class="nav-item">
-                    <a class="nav-link <%= locals.currentPage === 'about' ? 'active' : '' %>" href="/about">About Us</a>
+                    <a class="nav-link <%= locals.currentPage === 'about' ? 'active' : '' %>" href="/about">
+                        <i class="fas fa-info-circle me-1 d-lg-none"></i>About Us
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <%= locals.currentPage === 'reviews' ? 'active' : '' %>" href="/reviews">Reviews</a>
+                    <a class="nav-link <%= locals.currentPage === 'reviews' ? 'active' : '' %>" href="/reviews">
+                        <i class="fas fa-star me-1 d-lg-none"></i>Reviews
+                    </a>
                 </li>
                 <% if (locals.isAdmin) { %>
                     <li class="nav-item">
                         <a class="nav-link" href="/admin/dashboard">
-                            <i class="fas fa-cog"></i> Admin
+                            <i class="fas fa-cog me-1"></i> Admin
                         </a>
                     </li>
                 <% } %>

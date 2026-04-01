@@ -106,7 +106,7 @@ const avgRating = reviews.length
             <span class="product-tag"><%= product.category %></span>
 
             <!-- Price -->
-            <p class="price-large mt-3 mb-1">LKR <%= product.price %></p>
+            <p class="price-large mt-3 mb-1">LKR <%= Number(product.price).toLocaleString('en-US') %></p>
 
             <% if (avgRating) { %>
             <div class="d-flex align-items-center gap-2 mb-3">
