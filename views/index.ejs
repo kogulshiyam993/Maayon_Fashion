@@ -1,94 +1,100 @@
-<%- include('partials/header') %>
-<%- include('partials/navbar') %>
-
-<!-- HERO -->
-<section class="hero-section">
-    <div class="container">
-        <p style="font-size:0.75rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">New Collection</p>
-        <h1>Style Meets <span>Excellence</span></h1>
-        <p class="lead">Discover trendy fashion and premium stationery,<br>crafted for those who appreciate quality.</p>
-        <a href="/products/fashion" class="btn btn-gold">Explore Collection</a>
-    </div>
-</section>
-
-<!-- FASHION SECTION -->
-<section class="featured-section">
-    <div class="container">
-        <p style="font-size:0.72rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);text-align:center;">Curated For You</p>
-        <h2 class="section-title">Trendy Girls' Fashion</h2>
-        <p class="section-subtitle">Handpicked styles for every occasion</p>
-        <div class="row">
-            <% fashionProducts.forEach(product => { %>
-                <div class="col-md-4 mb-4">
-                    <div class="product-card">
-                        <div class="product-img-wrap">
-                            <img src="<%= product.image_url %>" class="product-img" alt="<%= product.name %>">
-                        </div>
-                        <div class="product-info">
-                            <h5><%= product.name %></h5>
-                            <p class="price">LKR <%= product.price %></p>
-                            <a href="/product/<%= product.id %>" class="btn btn-outline-gold w-100">View Details</a>
-                        </div>
-                    </div>
-                </div>
-            <% }) %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maayon Fashion - Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <%- include('partials/navbar') %>
+    
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <h1>Style Meets <span>Excellence</span></h1>
+            <p class="lead">Discover trendy fashion and premium stationery, crafted for those who appreciate quality.</p>
+            <a href="/products/fashion" class="btn-gold">EXPLORE COLLECTION</a>
         </div>
-        <div class="text-center mt-2">
-            <a href="/products/fashion" class="btn btn-gold">View All Fashion</a>
-        </div>
-    </div>
-</section>
+    </section>
 
-<!-- DIVIDER BANNER -->
-<div style="background:linear-gradient(135deg,var(--rose),#fdf0ec);padding:40px 0;text-align:center;">
-    <div class="container">
-        <p style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--dark);margin:0;font-style:italic;">
-            "From a dream to a destination — <span style="color:var(--gold);">celebrating 1 year of excellence</span>"
-        </p>
-    </div>
-</div>
-
-<!-- STATIONERY SECTION -->
-<section class="featured-section bg-light">
-    <div class="container">
-        <p style="font-size:0.72rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);text-align:center;">Premium Quality</p>
-        <h2 class="section-title">Stationery Collection</h2>
-        <p class="section-subtitle">Elevate your workspace and study desk</p>
-        <div class="row">
-            <% stationeryProducts.forEach(product => { %>
-                <div class="col-md-4 mb-4">
-                    <div class="product-card">
-                        <div class="product-img-wrap">
-                            <img src="<%= product.image_url %>" class="product-img" alt="<%= product.name %>">
+    <!-- Fashion Products -->
+    <section class="featured-section">
+        <div class="container">
+            <h2 class="section-title">Trendy Girls' Fashion</h2>
+            <p class="section-subtitle">Handpicked styles for every occasion</p>
+            <div class="row g-4">
+                <% if (fashionProducts && fashionProducts.length > 0) { %>
+                    <% fashionProducts.forEach(product => { %>
+                        <div class="col-md-4 col-lg-3">
+                            <div class="product-card">
+                                <div class="product-img-wrap">
+                                    <img src="<%= product.image_url %>" class="product-img" alt="<%= product.name %>">
+                                </div>
+                                <div class="product-info">
+                                    <h5><%= product.name %></h5>
+                                    <div class="price">LKR <%= product.price %></div>
+                                    <a href="/product/<%= product.id %>" class="btn-outline-gold w-100 text-center d-block">View Details</a>
+                                </div>
+                            </div>
                         </div>
-                        <div class="product-info">
-                            <h5><%= product.name %></h5>
-                            <p class="price">LKR <%= product.price %></p>
-                            <a href="/product/<%= product.id %>" class="btn btn-outline-gold w-100">View Details</a>
-                        </div>
-                    </div>
-                </div>
-            <% }) %>
-        </div>
-        <div class="text-center mt-2">
-            <a href="/products/stationery" class="btn btn-gold">View All Stationery</a>
-        </div>
-    </div>
-</section>
-
-<!-- NEWSLETTER -->
-<section class="newsletter-section">
-    <div class="container">
-        <p style="font-size:0.72rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">Stay Connected</p>
-        <h3>Join the Maayon Circle</h3>
-        <p>Be the first to see our monthly drops and artisanal stories.</p>
-        <div class="newsletter-input-group">
-            <div class="input-group">
-                <input type="email" class="form-control" placeholder="Email Address">
-                <button class="btn btn-gold">Subscribe</button>
+                    <% }) %>
+                <% } else { %>
+                    <p class="text-center">No fashion products available yet.</p>
+                <% } %>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<%- include('partials/footer') %>
+    <!-- Stationery Products -->
+    <section class="featured-section bg-light">
+        <div class="container">
+            <h2 class="section-title">Premium Stationery</h2>
+            <p class="section-subtitle">Quality essentials for creativity</p>
+            <div class="row g-4">
+                <% if (stationeryProducts && stationeryProducts.length > 0) { %>
+                    <% stationeryProducts.forEach(product => { %>
+                        <div class="col-md-4 col-lg-3">
+                            <div class="product-card">
+                                <div class="product-img-wrap">
+                                    <img src="<%= product.image_url %>" class="product-img" alt="<%= product.name %>">
+                                </div>
+                                <div class="product-info">
+                                    <h5><%= product.name %></h5>
+                                    <div class="price">LKR <%= product.price %></div>
+                                    <a href="/product/<%= product.id %>" class="btn-outline-gold w-100 text-center d-block">View Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+                <% } else { %>
+                    <p class="text-center">No stationery products available yet.</p>
+                <% } %>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter-section">
+        <div class="container">
+            <h3>Join the Family</h3>
+            <p>Subscribe for exclusive offers and style inspiration</p>
+            <form class="newsletter-input-group" action="/subscribe" method="POST">
+                <input type="email" name="email" class="form-control" placeholder="Your email address" required>
+                <button type="submit" class="btn-gold">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <%- include('partials/footer') %>
+    
+    <!-- Admin FAB -->
+    <a href="/auth/login" class="admin-fab">
+        <span class="lock-icon">🔒</span>
+        <span>Admin</span>
+    </a>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -15,7 +15,6 @@ const supabase = createClient(
     process.env.SUPABASE_ANON_KEY
 );
 
-// Supabase Admin client (for server-side operations with full access)
 const supabaseAdmin = createClient(
     process.env.SUPABASE_URL,
     process.env.SUPABASE_SERVICE_ROLE_KEY,
@@ -34,7 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Session configuration
 app.use(session({
-    secret: process.env.SESSION_SECRET || 'your-secret-key-change-this',
+    secret: process.env.SESSION_SECRET || 'maayon-fallback-secret',
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -44,14 +43,14 @@ app.use(session({
     }
 }));
 
-// Make Supabase available in all routes
+// Make Supabase clients available in all routes
 app.use((req, res, next) => {
     req.supabase = supabase;
     req.supabaseAdmin = supabaseAdmin;
     next();
 });
 
-// Make user session + categories available to all views (must be before routes)
+// Make user session + categories available to all views
 app.use(async (req, res, next) => {
     res.locals.user = req.session.user || null;
     res.locals.isAdmin = req.session.isAdmin || false;
@@ -73,21 +72,20 @@ app.set('views', path.join(__dirname, 'views'));
 
 // Routes
 const productRoutes = require('./routes/products');
-const adminRoutes = require('./routes/admin');
-const reviewRoutes = require('./routes/reviews');
-const authRoutes = require('./routes/auth');
+const adminRoutes   = require('./routes/admin');
+const reviewRoutes  = require('./routes/reviews');
+const authRoutes    = require('./routes/auth');
 
-app.use('/', productRoutes);
-app.use('/admin', adminRoutes);
+app.use('/',       productRoutes);
+app.use('/admin',  adminRoutes);
 app.use('/reviews', reviewRoutes);
-app.use('/auth', authRoutes);
+app.use('/auth',   authRoutes);
 
-// For Vercel serverless deployment
+// Start server (skipped on Vercel serverless)
 if (process.env.NODE_ENV !== 'production') {
     app.listen(PORT, () => {
         console.log(`Server running on http://localhost:${PORT}`);
     });
 }
 
-// Export for Vercel (CRITICAL for deployment)
 module.exports = app;

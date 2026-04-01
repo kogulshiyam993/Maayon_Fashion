@@ -1,15 +1,21 @@
- const express = require('express');
+const express = require('express');
 const router = express.Router();
 
-// Add review
+// Middleware: only admins can delete reviews
+const requireAdmin = (req, res, next) => {
+    if (!req.session.user || !req.session.isAdmin) {
+        return res.status(403).json({ error: 'Admin access required' });
+    }
+    next();
+};
+
+// Add review (public)
 router.post('/add', async (req, res) => {
     const { product_id, customer_name, rating, comment } = req.body;
-    
     try {
         const { error } = await req.supabase
             .from('reviews')
             .insert([{ product_id, customer_name, rating, comment }]);
-            
         if (error) throw error;
         res.redirect(`/product/${product_id}`);
     } catch (error) {
@@ -19,13 +25,12 @@ router.post('/add', async (req, res) => {
 });
 
 // Delete review (admin only)
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', requireAdmin, async (req, res) => {
     try {
-        const { error } = await req.supabase
+        const { error } = await req.supabaseAdmin
             .from('reviews')
             .delete()
             .eq('id', req.params.id);
-            
         if (error) throw error;
         res.json({ success: true });
     } catch (error) {
