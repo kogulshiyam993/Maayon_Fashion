@@ -1,0 +1,243 @@
+:root {
+    --soft-rose: #f9e6e6;
+    --gold: #d4af37;
+    --white: #ffffff;
+    --dark: #333333;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--dark);
+}
+
+/* Navbar */
+.navbar {
+    background: var(--white);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.navbar-brand {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.brand-gold {
+    color: var(--gold);
+}
+
+.brand-rose {
+    color: #ff6b6b;
+}
+
+.nav-link {
+    color: var(--dark);
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--gold);
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, var(--soft-rose) 0%, var(--white) 100%);
+    padding: 100px 0;
+    text-align: center;
+}
+
+.hero-section h1 {
+    color: var(--gold);
+    margin-bottom: 20px;
+}
+
+/* Buttons */
+.btn-gold {
+    background: var(--gold);
+    color: var(--white);
+    padding: 12px 30px;
+    border-radius: 25px;
+    transition: all 0.3s;
+}
+
+.btn-gold:hover {
+    background: #c4a32e;
+    color: var(--white);
+    transform: translateY(-2px);
+}
+
+.btn-outline-gold {
+    border: 2px solid var(--gold);
+    color: var(--gold);
+    background: transparent;
+}
+
+.btn-outline-gold:hover {
+    background: var(--gold);
+    color: var(--white);
+}
+
+/* Product Cards */
+.product-card {
+    background: var(--white);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.product-info {
+    padding: 20px;
+    text-align: center;
+}
+
+.price {
+    color: var(--gold);
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.price-large {
+    font-size: 2rem;
+    color: var(--gold);
+    font-weight: bold;
+}
+
+/* Sections */
+.featured-section {
+    padding: 60px 0;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 40px;
+    color: var(--gold);
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.section-title:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: var(--gold);
+}
+
+/* Reviews */
+.review-card {
+    background: var(--white);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+/* Testimonials */
+.testimonial-card {
+    height: 100%;
+}
+
+.testimonial-content {
+    background: var(--white);
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    height: 100%;
+    transition: transform 0.3s;
+}
+
+.testimonial-content:hover {
+    transform: translateY(-5px);
+}
+
+.testimonial-text {
+    font-style: italic;
+    margin: 15px 0;
+    color: #666;
+}
+
+/* Anniversary Badge */
+.anniversary-badge {
+    background: linear-gradient(135deg, var(--gold), #ffd700);
+    color: var(--white);
+    padding: 15px;
+    border-radius: 50px;
+    display: inline-block;
+    font-weight: bold;
+}
+
+/* WhatsApp Button */
+.whatsapp-btn {
+    background: #25D366;
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    margin-top: 20px;
+}
+.whatsapp-btn:hover {
+    background: #128C7E;
+    color: #fff;
+}
+
+/* WhatsApp language buttons */
+.whatsapp-lang-btn {
+    background: #25D366;
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 22px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s;
+    box-shadow: 0 3px 10px rgba(37,211,102,0.35);
+}
+.whatsapp-lang-btn:hover {
+    background: #128C7E;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(18,140,126,0.4);
+}
+
+/* Footer */
+footer {
+    background: var(--dark);
+    color: var(--white);
+    padding: 40px 0 20px;
+    margin-top: 60px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 60px 0;
+    }
+    
+    .hero-section h1 {
+        font-size: 2rem;
+    }
+    
+    .product-img {
+        height: 200px;
+    }
+}

@@ -1,0 +1,180 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar') %>
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-6">
+            <% if (images.length === 1) { %>
+                <!-- Single image -->
+                <img src="<%= images[0].image_url %>" class="img-fluid rounded w-100"
+                     style="max-height:450px;object-fit:cover;" alt="<%= product.name %>">
+            <% } else { %>
+                <!-- Multi-image carousel -->
+                <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <!-- Indicators -->
+                    <div class="carousel-indicators">
+                        <% images.forEach((img, idx) => { %>
+                            <button type="button" data-bs-target="#productCarousel"
+                                    data-bs-slide-to="<%= idx %>"
+                                    class="<%= idx === 0 ? 'active' : '' %>"
+                                    style="background:#d4af37;"></button>
+                        <% }) %>
+                    </div>
+                    <!-- Slides -->
+                    <div class="carousel-inner rounded">
+                        <% images.forEach((img, idx) => { %>
+                            <div class="carousel-item <%= idx === 0 ? 'active' : '' %>">
+                                <img src="<%= img.image_url %>" class="d-block w-100"
+                                     style="height:420px;object-fit:cover;" alt="<%= product.name %>">
+                            </div>
+                        <% }) %>
+                    </div>
+                    <!-- Controls -->
+                    <button class="carousel-control-prev" type="button"
+                            data-bs-target="#productCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button"
+                            data-bs-target="#productCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                    </button>
+                </div>
+
+                <!-- Thumbnail strip -->
+                <div class="d-flex gap-2 mt-2 flex-wrap">
+                    <% images.forEach((img, idx) => { %>
+                        <img src="<%= img.image_url %>"
+                             onclick="goToSlide(<%= idx %>)"
+                             class="thumb-img <%= idx === 0 ? 'thumb-active' : '' %>"
+                             style="width:60px;height:60px;object-fit:cover;border-radius:6px;
+                                    cursor:pointer;border:2px solid <%= idx === 0 ? '#d4af37' : '#ddd' %>;"
+                             alt="Thumbnail <%= idx+1 %>">
+                    <% }) %>
+                </div>
+
+                <script>
+                const carousel = document.getElementById('productCarousel');
+                const thumbs   = document.querySelectorAll('.thumb-img');
+
+                function goToSlide(idx) {
+                    bootstrap.Carousel.getInstance(carousel).to(idx);
+                }
+
+                carousel.addEventListener('slid.bs.carousel', e => {
+                    thumbs.forEach((t, i) => {
+                        t.style.border = i === e.to ? '2px solid #d4af37' : '2px solid #ddd';
+                    });
+                });
+                </script>
+            <% } %>
+        </div>
+        <div class="col-md-6">
+            <h2><%= product.name %></h2>
+            <p class="lead price-large">LKR <%= product.price %></p>
+            <p><%= product.description %></p>
+            
+            <!-- WhatsApp Order Buttons - Three Languages -->
+            <%
+            const phone = '94765539425';
+
+            const engMsg =
+                `👋 Hello *MAAYON FASHION!*\n\n` +
+                `I would like to place an order:\n\n` +
+                `--------------------------------\n` +
+                `*Product :* ${product.name}\n` +
+                `*Price   :* LKR ${product.price}\n` +
+                `--------------------------------\n\n` +
+                `Please confirm availability and share payment details.\n` +
+                `Thank you! 🙏`;
+
+            const sinMsg =
+                `👋 හෙලෝ *MAAYON FASHION!*\n\n` +
+                `මට පහත නිෂ්පාදිතය ඇණවුම් කිරීමට අවශ්‍යයි:\n\n` +
+                `--------------------------------\n` +
+                `*නිෂ්පාදිතය :* ${product.name}\n` +
+                `*මිල       :* LKR ${product.price}\n` +
+                `--------------------------------\n\n` +
+                `ලබා ගත හැකිද යන්න දන්වා ගෙවීම් විස්තර යවන්න.\n` +
+                `ස්තූතියි! 🙏`;
+
+            const tamMsg =
+                `👋 வணக்கம் *MAAYON FASHION!*\n\n` +
+                `நான் கீழே உள்ள பொருளை ஆர்டர் செய்ய விரும்புகிறேன்:\n\n` +
+                `--------------------------------\n` +
+                `*பொருள் :* ${product.name}\n` +
+                `*விலை   :* LKR ${product.price}\n` +
+                `--------------------------------\n\n` +
+                `கிடைக்குமா என்று உறுதிப்படுத்தி கட்டண விவரங்கள் அனுப்பவும்.\n` +
+                `நன்றி! 🙏`;
+            %>
+
+            <p class="fw-bold mt-4 mb-1">
+                <i class="fab fa-whatsapp text-success"></i> Order via WhatsApp:
+            </p>
+            <div class="d-flex flex-wrap gap-2 mt-2">
+                <a href="https://wa.me/<%= phone %>?text=<%= encodeURIComponent(engMsg) %>"
+                   class="btn whatsapp-lang-btn" target="_blank">
+                    <i class="fab fa-whatsapp me-1"></i> English
+                </a>
+                <a href="https://wa.me/<%= phone %>?text=<%= encodeURIComponent(sinMsg) %>"
+                   class="btn whatsapp-lang-btn" target="_blank">
+                    <i class="fab fa-whatsapp me-1"></i> සිංහල
+                </a>
+                <a href="https://wa.me/<%= phone %>?text=<%= encodeURIComponent(tamMsg) %>"
+                   class="btn whatsapp-lang-btn" target="_blank">
+                    <i class="fab fa-whatsapp me-1"></i> தமிழ்
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Reviews Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h3>Customer Reviews</h3>
+            <div class="reviews-section">
+                <% reviews.forEach(review => { %>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <strong><%= review.customer_name %></strong>
+                            <div class="rating">
+                                <% for(let i = 1; i <= 5; i++) { %>
+                                    <i class="fas fa-star <%= i <= review.rating ? 'text-warning' : 'text-muted' %>"></i>
+                                <% } %>
+                            </div>
+                        </div>
+                        <p><%= review.comment %></p>
+                        <small class="text-muted"><%= new Date(review.created_at).toLocaleDateString() %></small>
+                    </div>
+                <% }) %>
+                
+                <!-- Add Review Form -->
+                <div class="add-review mt-4">
+                    <h4>Share Your Experience</h4>
+                    <form action="/reviews/add" method="POST">
+                        <input type="hidden" name="product_id" value="<%= product.id %>">
+                        <div class="mb-3">
+                            <input type="text" class="form-control" name="customer_name" placeholder="Your Name" required>
+                        </div>
+                        <div class="mb-3">
+                            <select class="form-control" name="rating" required>
+                                <option value="">Select Rating</option>
+                                <option value="5">5 - Excellent</option>
+                                <option value="4">4 - Very Good</option>
+                                <option value="3">3 - Good</option>
+                                <option value="2">2 - Fair</option>
+                                <option value="1">1 - Poor</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control" name="comment" rows="3" placeholder="Your Review" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-gold">Submit Review</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer') %> 

@@ -1,0 +1,65 @@
+ <%- include('partials/header') %>
+<%- include('partials/navbar') %>
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4">Style Meets Excellence</h1>
+                <p class="lead">Discover trendy fashion and premium stationery at MAAYON FASHION</p>
+                <a href="/products/fashion" class="btn btn-gold">Shop Now</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Fashion Section -->
+<section class="featured-section">
+    <div class="container">
+        <h2 class="section-title">Trendy Girls' Fashion</h2>
+        <div class="row">
+            <% fashionProducts.forEach(product => { %>
+                <div class="col-md-4 mb-4">
+                    <div class="product-card">
+                        <img src="<%= product.image_url %>" class="product-img" alt="<%= product.name %>">
+                        <div class="product-info">
+                            <h5><%= product.name %></h5>
+                            <p class="price">LKR <%= product.price %></p>
+                            <a href="/product/<%= product.id %>" class="btn btn-outline-gold">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+        <div class="text-center mt-4">
+            <a href="/products/fashion" class="btn btn-gold">View All Fashion</a>
+        </div>
+    </div>
+</section>
+
+<!-- Stationery Section -->
+<section class="featured-section bg-light">
+    <div class="container">
+        <h2 class="section-title">Premium Stationery</h2>
+        <div class="row">
+            <% stationeryProducts.forEach(product => { %>
+                <div class="col-md-4 mb-4">
+                    <div class="product-card">
+                        <img src="<%= product.image_url %>" class="product-img" alt="<%= product.name %>">
+                        <div class="product-info">
+                            <h5><%= product.name %></h5>
+                            <p class="price">LKR <%= product.price %></p>
+                            <a href="/product/<%= product.id %>" class="btn btn-outline-gold">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+        <div class="text-center mt-4">
+            <a href="/products/stationery" class="btn btn-gold">View All Stationery</a>
+        </div>
+    </div>
+</section>
+
+<%- include('partials/footer') %>
